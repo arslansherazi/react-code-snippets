@@ -5,8 +5,8 @@ import ProfileCard from "./Profile"
 export default function Dashboard() {
   // User state with name and age
   const [user, setUser] = useState({
-    name: "Ali",
-    age: 25,
+    name: "John Doe",
+    age: 10,
   })
 
   // Check if user is an adult (18+)

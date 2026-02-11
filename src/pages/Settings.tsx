@@ -22,7 +22,7 @@ export default function Settings() {
 
   // Handle form submission - save data and show dialog
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault() // Prevent default form behavior: stops page from reloading/refreshing when form is submitted
     setSubmittedData({ ...form })
     setIsDialogOpen(true)
     console.log("Form submitted:", form)
