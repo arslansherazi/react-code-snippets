@@ -1,9 +1,10 @@
-function App() {
+import { Outlet } from "react-router-dom"
+import Layout from "./components/Layout"
+
+export default function App() {
   return (
-    <div>
-      <h1>React Code Snippets</h1>
-    </div>
+    <Layout>
+      <Outlet />
+    </Layout>
   )
 }
-
-export default App
