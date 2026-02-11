@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard"
 import Profile from "./pages/Profile"
 import Settings from "./pages/Settings"
 
+// Router configuration: Defines all routes and their corresponding components
 export const router = createBrowserRouter([
   {
     path: "/",

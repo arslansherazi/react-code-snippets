@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom"
 
+// Navigation bar component with active route highlighting
 export default function Navbar() {
   const location = useLocation()
 
@@ -7,6 +8,7 @@ export default function Navbar() {
     <nav className="bg-blue-600 text-white shadow-md">
       <div className="container mx-auto px-4 py-4">
         <div className="flex gap-6">
+          {/* Dashboard link with active state */}
           <Link
             to="/"
             className={`px-4 py-2 rounded-md transition-colors ${
@@ -17,6 +19,7 @@ export default function Navbar() {
           >
             Dashboard
           </Link>
+          {/* Profile link with active state */}
           <Link
             to="/profile"
             className={`px-4 py-2 rounded-md transition-colors ${
@@ -27,6 +30,7 @@ export default function Navbar() {
           >
             Profile
           </Link>
+          {/* Settings link with active state */}
           <Link
             to="/settings"
             className={`px-4 py-2 rounded-md transition-colors ${

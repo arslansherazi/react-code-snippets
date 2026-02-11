@@ -1,22 +1,28 @@
 import { useState } from "react"
 import ProfileCard from "./Profile"
 
+// Dashboard page: Displays user info and age status with increment button
 export default function Dashboard() {
+  // User state with name and age
   const [user, setUser] = useState({
     name: "Ali",
     age: 25,
   })
 
+  // Check if user is an adult (18+)
   const isAdult = user.age >= 18
 
   return (
     <div className="max-w-2xl mx-auto">
+      {/* Page title */}
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
 
+      {/* User profile card */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <ProfileCard user={user} />
       </div>
 
+      {/* Age status card with color-coded status */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <p className="text-lg text-gray-700 mb-2">
           Status:{" "}
@@ -30,6 +36,7 @@ export default function Dashboard() {
         </p>
       </div>
 
+      {/* Button to increment user age */}
       <button
         onClick={() => setUser((prev) => ({ ...prev, age: prev.age + 1 }))}
         className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors shadow-md"
