@@ -5,16 +5,14 @@ type Props = {
   children: React.ReactNode
 }
 
-// Reusable dialog/modal component with blurred background overlay
 export default function Dialog({ isOpen, onClose, title, children }: Props) {
-  // Don't render if dialog is closed
   if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
-      {/* Dialog container */}
+      {/* Dialog panel */}
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 border-2 border-gray-200">
-        {/* Dialog header with title and close button */}
+        {/* Header */}
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
           <button
@@ -22,7 +20,6 @@ export default function Dialog({ isOpen, onClose, title, children }: Props) {
             className="text-gray-400 hover:text-gray-600 transition-colors"
             aria-label="Close dialog"
           >
-            {/* Close icon (X) */}
             <svg
               className="w-6 h-6"
               fill="none"
@@ -38,9 +35,9 @@ export default function Dialog({ isOpen, onClose, title, children }: Props) {
             </svg>
           </button>
         </div>
-        {/* Dialog content area */}
+        {/* Body */}
         <div className="p-6">{children}</div>
-        {/* Dialog footer with close button */}
+        {/* Footer */}
         <div className="flex justify-end p-6 border-t">
           <button
             onClick={onClose}

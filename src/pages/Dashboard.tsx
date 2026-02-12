@@ -1,28 +1,26 @@
-import { useState } from "react"
-import ProfileCard from "./Profile"
+import ProfileCard from "../components/ProfileCard"
+import { useUser } from "../contexts/UserContext"
 
-// Dashboard page: Displays user info and age status with increment button
 export default function Dashboard() {
-  // User state with name and age
-  const [user, setUser] = useState({
-    name: "John Doe",
-    age: 10,
-  })
+  const { user, loading, error, updateUserData } = useUser()
 
-  // Check if user is an adult (18+)
+  if (loading && !user) return <p className="text-gray-600">Loading user...</p>
+  if (error) return <p className="text-red-600">{error}</p>
+  if (!user) return <p className="text-gray-600">No user data available</p>
+
   const isAdult = user.age >= 18
 
   return (
     <div className="max-w-2xl mx-auto">
-      {/* Page title */}
+      {/* Page header */}
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Dashboard</h1>
 
-      {/* User profile card */}
+      {/* User summary */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <ProfileCard user={user} />
       </div>
 
-      {/* Age status card with color-coded status */}
+      {/* Status section */}
       <div className="bg-white rounded-lg shadow-md p-6 mb-6">
         <p className="text-lg text-gray-700 mb-2">
           Status:{" "}
@@ -36,9 +34,9 @@ export default function Dashboard() {
         </p>
       </div>
 
-      {/* Button to increment user age */}
+      {/* Action */}
       <button
-        onClick={() => setUser((prev) => ({ ...prev, age: prev.age + 1 }))}
+        onClick={() => updateUserData({ age: user.age + 1 })}
         className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors shadow-md"
       >
         Increase Age

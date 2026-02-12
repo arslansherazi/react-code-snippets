@@ -1,34 +1,23 @@
-type Props = {
-  user?: {
-    name: string
-    age: number
-  }
-}
+import { useUser } from "../contexts/UserContext"
 
-// Profile component: Displays user information or empty state message
-export default function Profile({ user }: Props) {
-  // Show empty state if no user data provided
-  if (!user)
-    return (
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">Profile Page</h1>
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <p className="text-gray-600">No user data available</p>
-        </div>
-      </div>
-    )
+export default function Profile() {
+  const { user, loading, error } = useUser()
 
-  // Display user profile information
+  if (loading && !user) return <p className="text-gray-600">Loading user...</p>
+  if (error) return <p className="text-red-600">{error}</p>
+  if (!user) return <p className="text-gray-600">No user data available</p>
+
   return (
     <div className="max-w-2xl mx-auto">
-      {/* Page title */}
+      {/* Page header */}
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Profile</h1>
-      {/* User info card */}
+      {/* User details */}
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">
           {user.name}
         </h2>
         <p className="text-lg text-gray-600">Age: {user.age}</p>
+        <p className="text-lg text-gray-600">Email: {user.email}</p>
       </div>
     </div>
   )

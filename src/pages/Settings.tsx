@@ -1,34 +1,42 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Dialog from "../components/Dialog"
+import { useUser } from "../contexts/UserContext"
 
 export default function Settings() {
-  // Form state to store email and password input values
+  const { user, loading, updateUserData } = useUser()
+
   const [form, setForm] = useState({
     email: "",
     password: "",
   })
-  // Dialog visibility state
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [submittedData, setSubmittedData] = useState<{
     email: string
     password: string
   } | null>(null)
 
-  // Update form state when user types in input fields
+  useEffect(() => {
+    if (user?.email) {
+      setForm((prev) => ({ ...prev, email: user.email }))
+    }
+  }, [user])
+
+  // Dynamic key update keeps untouched fields as-is
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setForm((prev) => ({ ...prev, [name]: value }))
   }
 
-  // Handle form submission - save data and show dialog
-  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault() // Prevent default form behavior: stops page from reloading/refreshing when form is submitted
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    // Prevent browser's default submit refresh
+    e.preventDefault()
+    if (user && form.email !== user.email) {
+      await updateUserData({ email: form.email })
+    }
     setSubmittedData({ ...form })
     setIsDialogOpen(true)
-    console.log("Form submitted:", form)
   }
 
-  // Dialog content showing submitted email and masked password
   const dialogContent = submittedData ? (
     <div className="space-y-3">
       <div>
@@ -46,15 +54,15 @@ export default function Settings() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      {/* Page title */}
+      {/* Page header */}
       <h1 className="text-3xl font-bold text-gray-800 mb-6">Settings</h1>
 
-      {/* Settings form with email and password fields */}
+      {/* Settings form */}
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-lg shadow-md p-6 space-y-4"
       >
-        {/* Email input field */}
+        {/* Email field */}
         <div>
           <label
             htmlFor="email"
@@ -74,7 +82,7 @@ export default function Settings() {
           />
         </div>
 
-        {/* Password input field */}
+        {/* Password field */}
         <div>
           <label
             htmlFor="password"
@@ -94,16 +102,17 @@ export default function Settings() {
           />
         </div>
 
-        {/* Submit button */}
+        {/* Submit action */}
         <button
           type="submit"
+          disabled={loading}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition-colors shadow-md mt-4"
         >
-          Save
+          {loading ? "Saving..." : "Save"}
         </button>
       </form>
 
-      {/* Dialog component to display submitted form data */}
+      {/* Result dialog */}
       <Dialog
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}

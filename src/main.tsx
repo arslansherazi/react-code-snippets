@@ -3,10 +3,12 @@ import { createRoot } from 'react-dom/client'
 import { RouterProvider } from "react-router-dom"
 import './index.css'
 import { router } from "./router"
+import { UserProvider } from "./contexts/UserContext"
 
-// Entry point: Mount React app to DOM and initialize router
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </StrictMode>
 )

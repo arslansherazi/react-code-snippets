@@ -4,7 +4,6 @@ type Props = {
   children: React.ReactNode
 }
 
-// Layout component: Provides consistent page structure with Navbar and content area
 export default function Layout({ children }: Props) {
   return (
     <div className="min-h-screen bg-gray-50">
