@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Dialog from "../components/Dialog"
 import { useUser } from "../contexts/UserContext"
 
 export default function Settings() {
   const { user, loading, updateUserData } = useUser()
+  const emailInputRef = useRef<HTMLInputElement>(null)
+  const passwordInputRef = useRef<HTMLInputElement>(null)
 
   const [form, setForm] = useState({
     email: "",
@@ -20,6 +22,10 @@ export default function Settings() {
       setForm((prev) => ({ ...prev, email: user.email }))
     }
   }, [user])
+
+  useEffect(() => {
+    emailInputRef.current?.focus()
+  }, [])
 
   // Dynamic key update keeps untouched fields as-is
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,6 +83,13 @@ export default function Settings() {
             placeholder="Enter your email"
             value={form.email}
             onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault()
+                passwordInputRef.current?.focus()
+              }
+            }}
+            ref={emailInputRef}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
@@ -97,6 +110,7 @@ export default function Settings() {
             placeholder="Enter your password"
             value={form.password}
             onChange={handleChange}
+            ref={passwordInputRef}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
