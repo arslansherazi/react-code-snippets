@@ -1,17 +1,21 @@
 # React Code Snippets
 
-## Install Requirements
+## Getting Started
+
+Install the dependencies:
 
 ```bash
 npm install
 ```
 
-## Run Server
+Run the development server:
 
 ```bash
 npm run dev
 ```
 
-## Local Server Host Port
+Open [http://localhost:5173](http://localhost:5173).
 
-The development server runs on `http://localhost:5173`
+## Docs
+
+See [react-docs.md](./react-docs.md) for project structure, routing, context, auth, and patterns.

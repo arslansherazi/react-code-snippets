@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { fetchUser, updateUser, type User } from "../services/api"
+import { useAuth } from "./AuthContext"
 
 type UserContextValue = {
   user: User | null
@@ -12,6 +13,7 @@ type UserContextValue = {
 const UserContext = createContext<UserContextValue | null>(null)
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated } = useAuth()
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -43,8 +45,14 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      setUser(null)
+      setError(null)
+      setLoading(false)
+      return
+    }
     refreshUser()
-  }, []) // this will run only once when the component is mounted
+  }, [isAuthenticated])
 
   const value = useMemo( // useMemo is used to memoize the value so that it is not recalculated on every render
     () => ({ user, loading, error, refreshUser, updateUserData }),
@@ -54,7 +62,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
-export function useUser() {
+export function useUser() { // custom hook to use the user context
   const context = useContext(UserContext)
   if (!context) throw new Error("useUser must be used inside UserProvider")
   return context

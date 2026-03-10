@@ -28,3 +28,11 @@ export const updateUser = async (userData: Partial<User>): Promise<User> => {
     email: userData.email || "ali@example.com",
   }
 }
+
+export const loginUser = async (
+  username: string,
+  password: string,
+): Promise<boolean> => {
+  await delay(500)
+  return username === "testuser" && password === "test123"
+}
