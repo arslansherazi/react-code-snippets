@@ -157,7 +157,7 @@ useEffect(() => {
 
 ### What is useLayoutEffect?
 
-Like `useEffect`, but it runs **after** React updates the DOM and **before** the browser paints. Use it when you need to read or change the DOM immediately so the user doesn’t see a flicker (e.g. measuring an element, syncing scroll position).
+Like `useEffect`, but it runs **after** React updates the DOM and **before** the browser paints. Useful when the DOM must be read or changed immediately to prevent visible flicker (e.g. measuring an element, syncing scroll position).
 
 **When to use:** DOM measurements, positioning tooltips, or any update that must happen before paint. For most side effects (fetch, timers), stick with `useEffect`.
 
@@ -190,9 +190,9 @@ function MeasuredLabel({ text }: { text: string }) {
 
 ### What is useMemo?
 
-`useMemo` remembers a **computed value** between renders. It recalculates only when its dependencies change, so you avoid redoing expensive work on every render.
+`useMemo` remembers a **computed value** between renders. It recalculates only when its dependencies change, so expensive work is not redone on every render.
 
-**When to use:** Filtering or sorting large lists, heavy calculations, or creating objects/arrays that you pass to memoized child components.
+**When to use:** Filtering or sorting large lists, heavy calculations, or creating objects/arrays passed to memoized child components.
 
 ```tsx
 // Simple example: filter a list only when products or search text changes
@@ -246,7 +246,7 @@ function TodoList() {
 }
 ```
 
-**Rule:** Like `useMemo`, use `useCallback` when you have a concrete reason (memoized children, effect deps) — not for every function.
+**Rule:** Like `useMemo`, `useCallback` fits when there is a concrete reason (memoized children, effect deps) — not for every function.
 
 ---
 
@@ -532,5 +532,5 @@ function UserList() {
 - **Context** – For data that many components need (theme, user, auth).
 - **useEffect** – List the values used inside it in the dependency array; add cleanup when starting timers or subscriptions.
 - **useLayoutEffect** – Use when DOM must be measured or updated before the user sees the screen; otherwise use `useEffect`.
-- **useMemo / useCallback** – Reach for these when you have a performance reason (heavy work, memoized children), not by default.
+- **useMemo / useCallback** – Apply when there is a performance reason (heavy work, memoized children), not by default.
 - **Router** – Use `<Link>` for navigation; use `<Navigate>` or `navigate()` for redirects; use `<Outlet />` where the child route should render.
